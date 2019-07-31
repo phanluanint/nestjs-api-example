@@ -18,7 +18,6 @@ export class UserService {
 
   async create(input: UserInput): Promise<User> {
     const user = new User();
-    user._id = ObjectID();
     user.username = input.username;
     user.password = input.password;
     return this.userRepository.save(user);
