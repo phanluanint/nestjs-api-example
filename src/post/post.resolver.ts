@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { PostService } from './post.service';
 import { Post } from './post.entity';
 import { PostInput } from './post.input';
+import { UserInput } from '../user/user.input';
 
 @Resolver('Post')
 export class PostResolver {
@@ -18,7 +19,10 @@ export class PostResolver {
   }
 
   @Mutation(() => Post)
-  async createPost(@Args('input') input: PostInput): Promise<Post> {
-    return await this.postService.create(input);
+  async createPost(
+    @Args('input') input: PostInput,
+    @Args('author') author: UserInput,
+  ): Promise<Post> {
+    return await this.postService.create(input, author);
   }
 }

@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { join } from 'path';
 import { PostModule } from './post/post.module';
 
 @Module({
@@ -13,16 +12,17 @@ import { PostModule } from './post/post.module';
       autoSchemaFile: 'schema.gql',
     }),
     TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url:
-        'mongodb://localhost:27017/nest',
-      entities: [join(__dirname, '**/**.entity{.ts,.js}')],
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'postgres',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      useNewUrlParser: true,
-      logging: true,
     }),
     UserModule,
-    PostModule
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
